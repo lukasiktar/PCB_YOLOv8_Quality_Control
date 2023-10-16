@@ -26,11 +26,11 @@ int main(int argc, char* argv[])
 
     //Creating an instance for performing inference (loading YOLOv8 neural network and file with its classes)
     bool runOnGPU = false;
-    std::string projectBasePath = "C:\\Users\\lukas\\OneDrive\\Desktop\\Projekt\\OpenCV_CPP_VisualStudio2022\\Qt_OpenCV_loading_photo_to_gui";
+    std::string projectBasePath = "Path\\to\\specified\\folder";
     Inference inf(projectBasePath + "\\source\\models\\YOLOv8_PCB.onnx", cv::Size(640, 640), projectBasePath + "\\source\\classes\\YOLOv8m_PCB_classes.txt", runOnGPU);
 
     //Additional modification for constant detection and bounding box colors
-    Colors color(projectBasePath + "/source/classes/YOLOv8m_PCB_classes.txt");
+    Colors color(projectBasePath + "\\source\\classes\\YOLOv8m_PCB_classes.txt");
     std::map<std::string, cv::Scalar> dictionary = color.dictionary;
 
     //Inintialization of video stream
@@ -90,14 +90,6 @@ int main(int argc, char* argv[])
             widget.showOCRdetections(OCR_read_images, OCR_reads);
 
 
-            /*
-            if (inspections.size() > 0) {
-                widget.showInspections(inspections, inspections_name, inspections_num);
-            }
-            if (OCR_read_images.size() > 0) {
-                widget.showOCRdetections(OCR_read_images, OCR_reads);
-            }
-            */
             //Draw the bounding boxes and labels on captured image
             for (int i = 0; i < detections; ++i)
             {
@@ -110,7 +102,7 @@ int main(int argc, char* argv[])
 
                 // Detection bounding box text
                 //std::string classString = detection.className + ' ' + std::to_string(detection.confidence).substr(0, 4);  //Class name and confidence
-                std::string classString = detection.className;  //Class name and confidence
+                std::string classString = detection.className;  //Class name
 
                 cv::Size textSize = cv::getTextSize(classString, cv::FONT_HERSHEY_DUPLEX, 1, 2, 0);
                 cv::Rect textBox(box.x, box.y - 40, textSize.width + 10, textSize.height + 20);
